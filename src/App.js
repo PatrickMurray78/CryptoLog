@@ -4,7 +4,10 @@ import './App.css';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import {Navbar, Nav} from 'react-bootstrap';
 import { BrowserRouter as Router, Switch, Route} from 'react-router-dom';
-import {Content} from 'components/content.js';
+import { Content } from './components/content';
+import { Read } from './components/read';
+import { Create } from './components/create';
+
 class App extends Component {
   render(){
   return (
