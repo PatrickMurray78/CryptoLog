@@ -1,11 +1,11 @@
 import React from 'react';
 
-export class Content extends React.Component {
+export class Create extends React.Component {
 
     render() {
         return(
             <div>
-                <h1>This is the content component</h1>
+                <h1>This is the create component</h1>
             </div>
         )
     }

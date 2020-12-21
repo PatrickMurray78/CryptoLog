@@ -4,7 +4,7 @@ import './App.css';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import {Navbar, Nav} from 'react-bootstrap';
 import { BrowserRouter as Router, Switch, Route} from 'react-router-dom';
-
+import {Content} from 'components/content.js';
 class App extends Component {
   render(){
   return (
@@ -19,9 +19,9 @@ class App extends Component {
         </Nav>
         </Navbar>
         <Switch>
-          <Route path='/' component={content} exact/>
-          <Route path='/create' component={content} exact/>
-          <Route path='/read' component={content} exact/>
+          <Route path='/' component={Content} exact/>
+          <Route path='/create' component={Create} exact/>
+          <Route path='/read' component={Read} exact/>
         </Switch>
       </div>
     </Router>
