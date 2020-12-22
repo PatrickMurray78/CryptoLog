@@ -13,6 +13,12 @@ export class Create extends React.Component {
         }
     }
 
+    onChangeLogo(e) {
+        this.setState({
+            Logo: e.Target.value
+        });
+    }
+
     onSubmit(e) {
         e.preventDefault();
     }
