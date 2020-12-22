@@ -1,30 +1,22 @@
 import React from 'react';
 import { Cryptos } from './cryptos';
+import axios from 'axios';
 
 export class Read extends React.Component {
 
     state = {
-        cryptos: [
-            {
-                "Logo": "https://cryptologos.cc/logos/bitcoin-btc-logo.png?v=008",
-                "Ticker": "BTC",
-                "Price": "$23000",
-                "Holdings": "14.365"
-            },
-            {
-                "Logo": "https://cryptologos.cc/logos/ethereum-eth-logo.png?v=008",
-                "Ticker": "ETH",
-                "Price": "$550",
-                "Holdings": "184.6"
-            },
-            {
-                "Logo": "https://cryptologos.cc/logos/ocean-protocol-ocean-logo.png?v=008",
-                "Ticker": "OCEAN",
-                "Price": "$0.43",
-                "Holdings": "225036.3"
-            }
-        ]
+        cryptos: []
     };
+
+    componentDidMount() {
+        axios.get('https://jsonblob.com/api/jsonblob/44a08d5e-445a-11eb-91ad-0bd37d7cb63c')
+        .then((response) => {
+            this.setState({ cryptos: response.data.Search })
+        })
+        .catch((error) => {
+            console.log(error)
+        });
+    }
 
     render() {
         return(
