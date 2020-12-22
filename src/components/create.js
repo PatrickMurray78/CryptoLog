@@ -1,4 +1,5 @@
 import React from 'react';
+import axios from 'axios';
 
 export class Create extends React.Component {
 
@@ -46,6 +47,20 @@ export class Create extends React.Component {
     onSubmit(e) {
         e.preventDefault();
         alert(this.state.Holdings + ' ' + this.state.Ticker + ' added at ' + this.state.Price);
+        
+        const newCrypto = {
+            ticker: this.state.Ticker,
+            price: this.state.Price,
+            holdings: this.state.Holdings,
+            Logo: this.state.Logo
+        }
+        axios.post('http://localhost:4000/api/cryptos', newCrypto)
+        .then((res) => {
+            console.log(res)
+        })
+        .catch((err) => {
+            console.log(err)
+        })
     }
 
     render() {
