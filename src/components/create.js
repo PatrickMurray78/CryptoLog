@@ -3,8 +3,11 @@ import React from 'react';
 export class Create extends React.Component {
 
     constructor() {
-        this.super();
+        super();
 
+        this.onSubmit = this.onSubmit.bind(this);
+        this.onChangeLogo = this.onChangeTitle.bind(this);
+        
         this.state = {
             Logo: '',
             Ticker: '',
