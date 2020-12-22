@@ -45,7 +45,7 @@ export class Create extends React.Component {
 
     onSubmit(e) {
         e.preventDefault();
-        alert(this.state.Ticker + ' added');
+        alert(this.state.Holdings + ' ' + this.state.Ticker + ' added at ' + this.state.Price);
     }
 
     render() {
