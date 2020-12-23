@@ -15,8 +15,8 @@ app.use(function(req, res, next) {
     next()
 })
 
-app.use(express.static(path.join(__dirname, '../build')))
-app.use('/static', express.static(path.join(__dirname, 'build//static')))
+//app.use(express.static(path.join(__dirname, '../build')))
+//app.use('/static', express.static(path.join(__dirname, 'build//static')))
 
 // parse application/x-www-form-urlencoded
 app.use(bodyParser.urlencoded({ extended: false}))
@@ -25,10 +25,9 @@ app.use(bodyParser.urlencoded({ extended: false}))
 app.use(bodyParser.json())
 
 const myConnectionString = 'mongodb+srv://admin:admin@cluster0.3oxak.mongodb.net/cryptos?retryWrites=true&w=majority'
-//var conn = mongoose.connect(myConnectionString, {useNewUrlParser: true})
 var conn = mongoose.createConnection(myConnectionString)
+
 const myLogoConnectionString = 'mongodb+srv://admin:admin@cluster0.3oxak.mongodb.net/cryptologos?retryWrites=true&w=majority'
-//var conn2 = mongoose.connect(myLogoConnectionString, {useNewUrlParser: true})
 var conn2 = mongoose.createConnection(myLogoConnectionString)
 
 const Schema = mongoose.Schema
@@ -105,9 +104,9 @@ app.post('/api/cryptos', (req, res) => {
     })
 })
 
-app.get('*', (req, res) => {
+/*app.get('*', (req, res) => {
     res.sendFile(path.join(__dirname + '/../build/index.html'))
-})
+})*/
 
 app.listen(port, () => {
   console.log(`Example app listening at http://localhost:${port}`)
