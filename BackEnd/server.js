@@ -25,18 +25,28 @@ app.use(bodyParser.urlencoded({ extended: false}))
 app.use(bodyParser.json())
 
 const myConnectionString = 'mongodb+srv://admin:admin@cluster0.3oxak.mongodb.net/cryptos?retryWrites=true&w=majority'
-mongoose.connect(myConnectionString, {useNewUrlParser: true})
+//var conn = mongoose.connect(myConnectionString, {useNewUrlParser: true})
+var conn = mongoose.createConnection(myConnectionString)
+const myLogoConnectionString = 'mongodb+srv://admin:admin@cluster0.3oxak.mongodb.net/cryptologos?retryWrites=true&w=majority'
+//var conn2 = mongoose.connect(myLogoConnectionString, {useNewUrlParser: true})
+var conn2 = mongoose.createConnection(myLogoConnectionString)
 
 const Schema = mongoose.Schema
 
 var cryptoSchema = new Schema({
+    ticker: String,
+    price: String,
+    holdings: String,
+    logo: String
+})
+
+var logoSchema = new Schema ({
     ticker:String,
-    price:String,
-    holdings:String,
     logo:String
 })
 
-var CryptoModel = mongoose.model('crypto', cryptoSchema)
+var CryptoModel = conn.model('crypto', cryptoSchema)
+var LogoModel = conn2.model('logos', logoSchema)
 
 app.get('/api/cryptos', (req, res) => {
     CryptoModel.find((err, data) =>{
@@ -71,20 +81,28 @@ app.delete('/api/cryptos/:id', (req, res) => {
 })
 
 app.post('/api/cryptos', (req, res) => {
+    var cryptoLogo;
+
     console.log('Crypto Received')
     console.log(req.body.ticker)
     console.log(req.body.price)
     console.log(req.body.holdings)
-    console.log(req.body.logo)
 
-    CryptoModel.create({
-        ticker:req.body.ticker,
-        price:req.body.price,
-        holdings:req.body.holdings,
-        logo:req.body.logo
+    LogoModel.findOne({'ticker': req.body.ticker}, (err, result) => {
+        if(err) {
+            console.log(err)
+        }
+        cryptoLogo = result.logo
+
+        CryptoModel.create({
+            ticker:req.body.ticker,
+            price:req.body.price,
+            holdings:req.body.holdings,
+            logo:cryptoLogo
+        })
+
+        res.send('Crypto Added');
     })
-
-    res.send('Crypto Added');
 })
 
 app.get('*', (req, res) => {
