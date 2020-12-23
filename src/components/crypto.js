@@ -2,6 +2,7 @@ import React from 'react';
 import Card from 'react-bootstrap/Card';
 import Button from 'react-bootstrap/Button';
 import axios from 'axios';
+import Link from 'react-router-dom/Link';
 
 export class Crypto extends React.Component {
 
@@ -36,6 +37,7 @@ export class Crypto extends React.Component {
                             </footer>
                         </blockquote>
                     </Card.Body>
+                    <Link to={'/edit/' + this.props.crypto._id} className="btn btn-dark">Edit</Link>
                     <Button variant='dark' onClick={this.DeleteMovie}>Delete</Button>
                 </Card>
             </div>
