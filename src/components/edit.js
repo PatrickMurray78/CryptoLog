@@ -10,7 +10,6 @@ export class Edit extends React.Component {
         this.onChangeTicker = this.onChangeTicker.bind(this);
         this.onChangePrice = this.onChangePrice.bind(this);
         this.onChangeHoldings = this.onChangeHoldings.bind(this);
-        this.onChangeLogo = this.onChangeLogo.bind(this);
 
         this.state = {
             Logo: '',
@@ -29,8 +28,7 @@ export class Edit extends React.Component {
                 _id: response.data._id,
                 Ticker: response.data.ticker,
                 Price: response.data.price,
-                Holdings: response.data.holdings,
-                Logo: response.data.logo
+                Holdings: response.data.holdings
             })
         })
         .catch((error) => {
@@ -53,12 +51,6 @@ export class Edit extends React.Component {
     onChangeHoldings(e) {
         this.setState({
             Holdings: e.target.value
-        });
-    }
-
-    onChangeLogo(e) {
-        this.setState({
-            Logo: e.target.value
         });
     }
 
@@ -108,14 +100,6 @@ export class Edit extends React.Component {
                         className='form-control'
                         value={this.state.Holdings}
                         onChange={this.onChangeHoldings}></input>
-                    </div>
-                    <div className="form-group">
-                        <label>Add Logo: </label>
-                        <textarea type='text'
-                        className='form-control'
-                        value={this.state.Logo}
-                        onChange={this.onChangeLogo}
-                        readOnly></textarea>
                     </div>
                     <div className="form-group">
                         <input type='submit'
