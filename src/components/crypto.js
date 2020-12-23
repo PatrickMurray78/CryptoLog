@@ -7,13 +7,13 @@ export class Crypto extends React.Component {
         return (
             <div>
                 <Card>
-                    <Card.Header>{this.props.crypto.Ticker}</Card.Header>
+                    <Card.Header>{this.props.crypto.ticker}</Card.Header>
                     <Card.Body>
                         <blockquote className="blockquote mb-0">
-                            <img src={this.props.crypto.Logo} width="100" height="100"></img>
+                            <img src={this.props.crypto.logo} width="100" height="100"></img>
                             <footer className="blockquote-footer">
-                                <p>{this.props.crypto.Price}</p>
-                                <p>{this.props.crypto.Holdings}</p>
+                                <p>{this.props.crypto.price}</p>
+                                <p>{this.props.crypto.holdings}</p>
                             </footer>
                         </blockquote>
                     </Card.Body>
