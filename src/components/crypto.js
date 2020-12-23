@@ -1,7 +1,26 @@
 import React from 'react';
 import Card from 'react-bootstrap/Card';
+import Button from 'react-bootstrap/Button';
+import axios from 'axios';
 
 export class Crypto extends React.Component {
+
+    constructor() {
+        super();
+
+        this.DeleteMovie = this.DeleteMovie.bind(this);
+    }
+
+    DeleteMovie(e) {
+        e.preventDefault();
+        console.log("Delete: " + this.props.crypto._id);
+
+        axios.delete("http://localhost:4000/api/cryptos/" + this.props.crypto._id)
+        .then(() => {
+            this.props.ReloadData();
+        })
+        .catch();
+    }
 
     render() {
         return (
@@ -17,6 +36,7 @@ export class Crypto extends React.Component {
                             </footer>
                         </blockquote>
                     </Card.Body>
+                    <Button variant='dark' onClick={this.DeleteMovie}>Delete</Button>
                 </Card>
             </div>
         )
