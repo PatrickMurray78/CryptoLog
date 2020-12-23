@@ -47,13 +47,14 @@ export class Create extends React.Component {
     onSubmit(e) {
         e.preventDefault();
         alert(this.state.Holdings + ' ' + this.state.Ticker + ' added at ' + this.state.Price);
-        
+
         const newCrypto = {
             ticker: this.state.Ticker,
             price: this.state.Price,
             holdings: this.state.Holdings,
-            Logo: this.state.Logo
+            logo: this.state.Logo
         }
+
         axios.post('http://localhost:4000/api/cryptos', newCrypto)
         .then((res) => {
             console.log(res)
@@ -90,10 +91,10 @@ export class Create extends React.Component {
                     </div>
                     <div className="form-group">
                         <label>Add Logo: </label>
-                        <input type='text'
+                        <textarea type='text'
                         className='form-control'
                         value={this.state.Logo}
-                        onChange={this.onChangeLogo}></input>
+                        onChange={this.onChangeLogo}></textarea>
                     </div>
                     <div className="form-group">
                         <input type='submit'
