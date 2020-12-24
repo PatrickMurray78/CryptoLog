@@ -41,7 +41,7 @@ export class Crypto extends React.Component {
                         <h4>{this.props.crypto.holdings}</h4>
                     </td>
                     <td width="18%">
-                        <h4>${this.props.crypto.holdings * this.props.crypto.price}</h4>
+                        <h4>${Math.round((this.props.crypto.holdings * this.props.crypto.price)*100)/100}</h4>
                     </td>
                     <td width="18%" style={{textAlign: "center"}}>
                         <Link to={'/edit/' + this.props.crypto._id}>

@@ -43,13 +43,14 @@ export class Read extends React.Component {
         cryptos.data.forEach(crypto => {
             this.state.portfolioValue += crypto.price * crypto.holdings;
         });
-        document.getElementById('portfolioValueID').innerHTML = '$' + this.state.portfolioValue;
+        document.getElementById('portfolioValueID').innerHTML = '$' + Math.round(this.state.portfolioValue * 100) / 100;
     }
 
     render() {
         return(
             <div>
                 <div style={{backgroundColor: "grey", width: "90%", height: "70px", margin: "auto", borderRadius: "15px"}}>
+                    <h6 style={{color: "white", fontSize: "80%", marginBottom: "5px", paddingTop: "7px"}}>Portfolio Value</h6>
                     <h4 id="portfolioValueID" style={{color: "white"}}></h4>
                 </div>
                 <table width="100%" style={{textAlign: "right"}}>
