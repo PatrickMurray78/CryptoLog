@@ -48,7 +48,7 @@ export class Read extends React.Component {
 
     render() {
         return(
-            <div style={{backgroundColor: "#303030", zIndex: "10", minHeight: "100vh", position: "relative"}}>
+            <div style={{backgroundColor: "#303030", minHeight: "100vh", position: "relative"}}>
                 <div style={{backgroundColor: "grey", width: "90%", height: "70px", margin: "auto", borderRadius: "15px"}}>
                     <h6 style={{color: "white", fontFamily: "monospace", fontSize: "80%", marginBottom: "5px", paddingTop: "7px"}}>Portfolio Value</h6>
                     <h4 id="portfolioValueID" style={{color: "white", fontFamily: "sans-serif"}}></h4>
