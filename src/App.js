@@ -19,7 +19,7 @@ class App extends Component {
   return (
     <Router>
       <div className="App">
-        <div style={{backgroundColor: "#303030", padding: "5px"}}>
+        <div style={{backgroundColor: "#303030", padding: "5px", fontFamily: "monospace"}}>
           <h1 style={{color: "white"}}>CryptoLog</h1>
         </div>
         <Switch>
