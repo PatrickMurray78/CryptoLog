@@ -20,15 +20,14 @@ export class Edit extends React.Component {
     }
 
     componentDidMount() {
-        console.log(this.props.match.params.id);
-
         axios.get('http://localhost:4000/api/cryptos/' + this.props.match.params.id)
         .then((response) => {
             this.setState({
                 _id: response.data._id,
                 Ticker: response.data.ticker,
                 Price: response.data.price,
-                Holdings: response.data.holdings
+                Holdings: response.data.holdings,
+                Logo: response.data.logo
             })
         })
         .catch((error) => {
@@ -56,7 +55,7 @@ export class Edit extends React.Component {
 
     onSubmit(e) {
         e.preventDefault();
-        alert(this.state.Holdings + ' ' + this.state.Ticker + ' added at ' + this.state.Price);
+        //alert(this.state.Holdings + ' ' + this.state.Ticker + ' added at ' + this.state.Price);
 
         const newCrypto = {
             ticker: this.state.Ticker,
@@ -66,7 +65,7 @@ export class Edit extends React.Component {
             _id: this.state._id
         }
 
-        axios.put('http://localhost:4000/api/cryptos' + this.state._id, newCrypto)
+        axios.put('http://localhost:4000/api/cryptos/' + this.state._id, newCrypto)
         .then(res => {
             console.log(res.data)
         })
