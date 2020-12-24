@@ -67,7 +67,12 @@ app.put('/api/cryptos/:id', (req, res) => {
 
     CryptoModel.findByIdAndUpdate(req.params.id, req.body, {new: true},
         (err, data) => {
-            res.send(data)
+            if(err) {
+                console.log(err)
+            }
+            else {
+                res.sendStatus(200)
+            }
         })
 })
 
@@ -100,6 +105,7 @@ app.post('/api/cryptos', (req, res) => {
                 holdings:req.body.holdings,
                 logo:result.logo
             })
+            res.sendStatus(200)
         }
     })
 })

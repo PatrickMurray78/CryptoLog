@@ -49,8 +49,10 @@ export class Create extends React.Component {
         }
 
         axios.post('http://localhost:4000/api/cryptos', newCrypto)
-        .then((res) => {
-            console.log(res)
+        .then((response) => {
+            if (response.status == 200) {
+                window.location = "/read" 
+            }
         })
         .catch((err) => {
             console.log(err)

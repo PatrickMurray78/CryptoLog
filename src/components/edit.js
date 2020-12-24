@@ -67,7 +67,9 @@ export class Edit extends React.Component {
 
         axios.put('http://localhost:4000/api/cryptos/' + this.state._id, newCrypto)
         .then(res => {
-            console.log(res.data)
+            if (res.status == 200) {
+                window.location = "/read" 
+            }
         })
         .catch(err => {
             console.log(err)
