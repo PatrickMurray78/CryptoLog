@@ -80,8 +80,6 @@ app.delete('/api/cryptos/:id', (req, res) => {
 })
 
 app.post('/api/cryptos', (req, res) => {
-    var cryptoLogo;
-
     console.log('Crypto Received')
     console.log(req.body.ticker)
     console.log(req.body.price)
@@ -91,16 +89,18 @@ app.post('/api/cryptos', (req, res) => {
         if(err) {
             console.log(err)
         }
-        cryptoLogo = result.logo
-
-        CryptoModel.create({
-            ticker:req.body.ticker,
-            price:req.body.price,
-            holdings:req.body.holdings,
-            logo:cryptoLogo
-        })
-
-        res.send('Crypto Added');
+        else if(result == null) {
+            console.log('')
+            console.log(req.body.ticker + ' not supported!')
+        }
+        else {
+            CryptoModel.create({
+                ticker:req.body.ticker,
+                price:req.body.price,
+                holdings:req.body.holdings,
+                logo:result.logo
+            })
+        }
     })
 })
 

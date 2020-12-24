@@ -39,7 +39,7 @@ export class Create extends React.Component {
 
     onSubmit(e) {
         e.preventDefault();
-        alert(this.state.Holdings + ' ' + this.state.Ticker + ' added at ' + this.state.Price);
+        //alert(this.state.Holdings + ' ' + this.state.Ticker + ' added at ' + this.state.Price);
 
         const newCrypto = {
             ticker: this.state.Ticker,
@@ -62,7 +62,7 @@ export class Create extends React.Component {
             <div className='App'>
                 <form onSubmit={this.onSubmit}>
                     <div className="form-group">
-                        <label>Add Tickerg: </label>
+                        <label>Add Ticker: </label>
                         <input type='text'
                         className='form-control'
                         value={this.state.Ticker}
