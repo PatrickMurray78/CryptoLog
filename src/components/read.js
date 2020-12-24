@@ -37,6 +37,27 @@ export class Read extends React.Component {
     render() {
         return(
             <div>
+                <table width="100%" style={{textAlign: "right"}}>
+                    <tr>
+                        <td width="10%">
+
+                        </td>
+                        <td width="18%" style={{textAlign: "left"}}>
+                            <h5>Name</h5>
+                        </td>
+                        <td width="18%">
+                            <h5>Price</h5>
+                        </td>
+                        <td width="18%">
+                            <h5>Holdings</h5>
+                        </td>
+                        <td width="18%">
+                            <h5>Value</h5>
+                        </td>
+                        <td width="18%">
+                        </td>
+                    </tr>
+                </table>
                 <Cryptos cryptos={this.state.cryptos} ReloadData={this.ReloadData}></Cryptos>
             </div>
         )
