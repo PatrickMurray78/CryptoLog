@@ -74,8 +74,8 @@ app.put('/api/cryptos/:id', (req, res) => {
 app.delete('/api/cryptos/:id', (req, res) => {
     console.log("Delete Crypto: " + req.params.id)
 
-    CryptoModel.findByIdAndDelete(req.params.id, (req, res) => {
-        //res.send(data)
+    CryptoModel.findByIdAndDelete(req.params.id, (err, data) => {
+        res.send(data)
     })
 })
 
