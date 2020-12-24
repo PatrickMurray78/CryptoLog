@@ -12,13 +12,16 @@ export class Read extends React.Component {
     }
 
     state = {
+        portfolioValue: 0,
         cryptos: []
     };
+
 
     componentDidMount() {
         axios.get('http://localhost:4000/api/cryptos')
         .then((response) => {
             this.setState({ cryptos: response.data })
+            this.getPortfolioValue(response);
         })
         .catch((error) => {
             console.log(error)
@@ -35,14 +38,23 @@ export class Read extends React.Component {
         });
     }
 
+    getPortfolioValue(cryptos) {
+        // Set total portfolio value
+        cryptos.data.forEach(crypto => {
+            this.state.portfolioValue += crypto.price * crypto.holdings;
+        });
+        document.getElementById('portfolioValueID').innerHTML = '$' + this.state.portfolioValue;
+    }
+
     render() {
         return(
             <div>
+                <div style={{backgroundColor: "grey", width: "90%", height: "70px", margin: "auto", borderRadius: "15px"}}>
+                    <h4 id="portfolioValueID" style={{color: "white"}}></h4>
+                </div>
                 <table width="100%" style={{textAlign: "right"}}>
                     <tr>
-                        <td width="10%">
-
-                        </td>
+                        <td width="10%"></td>
                         <td width="18%" style={{textAlign: "left"}}>
                             <h6>Name</h6>
                         </td>
@@ -55,8 +67,7 @@ export class Read extends React.Component {
                         <td width="18%">
                             <h6>Value</h6>
                         </td>
-                        <td width="18%">
-                        </td>
+                        <td width="18%"></td>
                     </tr>
                 </table>
                 <Cryptos cryptos={this.state.cryptos} ReloadData={this.ReloadData}></Cryptos>
