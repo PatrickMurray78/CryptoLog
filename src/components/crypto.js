@@ -26,30 +26,10 @@ export class Crypto extends React.Component {
 
     render() {
         return (
-            /*<div>
-                <Card>
-                    <Card.Header>{this.props.crypto.ticker}</Card.Header>
-                    <Card.Body>
-                        <blockquote className="blockquote mb-0">
-                            <img src={this.props.crypto.logo} width="100" height="100"></img>
-                            <footer className="blockquote-footer">
-                                <p>{this.props.crypto.price}</p>
-                                <p>{this.props.crypto.holdings}</p>
-                            </footer>
-                        </blockquote>
-                    </Card.Body>
-                    <Link to={'/edit/' + this.props.crypto._id} className="btn btn-dark">Edit</Link>
-                    <Button variant='dark' onClick={this.DeleteMovie}>Delete</Button>
-                </Card>
-            </div>*/
-            /*<div style={{backgroundColor: "blue", border: "1px solid black", textAlign: "left", padding: "10px", display: "inline-block", width: "100%"}}>
-                <img src={this.props.crypto.logo} width="50" height="50" style={{float: "left"}}></img>
-                <h3 style={{float: "left", paddingLeft: "15px"}}>{this.props.crypto.ticker}</h3>
-            </div>*/
-            <table style={{textAlign: "right"}} width="100%" border-top="1px solid black">
+            <table style={{textAlign: "right", borderTop: "1px solid rgba(0, 0, 0, 0.3"}} width="100%">
                 <tr>
                     <td width="10%">
-                        <img src={this.props.crypto.logo} height="50px" width="50px"></img>
+                        <img src={this.props.crypto.logo} height="30px" width="30px"></img>
                     </td>
                     <td width="18%" style={{textAlign: "left"}}>
                         <h4>{this.props.crypto.ticker}</h4>
