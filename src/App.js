@@ -10,11 +10,6 @@ import { Create } from './components/create';
 import { Edit } from './components/edit';
 import Link from 'react-router-dom/Link';
 
-/*<Navbar expand="xl" variant="dark" bg="dark" style={{textAlign: "center"}}>
-          <Navbar.Brand href="/read">CryptoLog</Navbar.Brand>
-        </Navbar>*/
-
-
 class App extends Component {
   render(){
   return (

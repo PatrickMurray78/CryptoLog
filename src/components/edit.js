@@ -1,5 +1,6 @@
 import React from 'react';
 import axios from 'axios';
+import Link from 'react-router-dom/Link';
 
 export class Edit extends React.Component {
 
@@ -78,9 +79,9 @@ export class Edit extends React.Component {
 
     render() {
         return(
-            <div className='App'>
+            <div className='App' style={{backgroundColor: "#303030", color: "white", height: "100vh", fontFamily: "monospace"}}>
                 <form onSubmit={this.onSubmit}>
-                    <div className="form-group">
+                    <div className="form-group" style={{width: "50vw", margin: "auto", paddingTop: "20px"}}>
                         <label>Add Ticker: </label>
                         <input type='text'
                         className='form-control'
@@ -88,24 +89,26 @@ export class Edit extends React.Component {
                         onChange={this.onChangeTicker}
                         readOnly></input>
                     </div>
-                    <div className="form-group">
+                    <div className="form-group" style={{width: "50vw", margin: "auto", paddingTop: "20px"}}>
                         <label>Add Price: </label>
                         <input type='text'
                         className='form-control'
                         value={this.state.Price}
                         onChange={this.onChangePrice}></input>
                     </div>
-                    <div className="form-group">
+                    <div className="form-group" style={{width: "50vw", margin: "auto", paddingTop: "20px"}}>
                         <label>Add Holdings: </label>
                         <input type='text'
                         className='form-control'
                         value={this.state.Holdings}
                         onChange={this.onChangeHoldings}></input>
                     </div>
-                    <div className="form-group">
-                        <input type='submit'
-                        value='Edit Crypto'
-                        className='btn btn-dark'></input>
+                    <div className="form-group" style={{paddingTop: "30px"}}>
+                        <Link onClick={this.onSubmit}>
+                            <svg xmlns="http://www.w3.org/2000/svg" width="50" height="50" fill="currentColor" class="bi bi-check2" viewBox="0 0 16 16" style={{color: "white"}}>
+                                <path d="M13.854 3.646a.5.5 0 0 1 0 .708l-7 7a.5.5 0 0 1-.708 0l-3.5-3.5a.5.5 0 1 1 .708-.708L6.5 10.293l6.646-6.647a.5.5 0 0 1 .708 0z"/>
+                            </svg>
+                        </Link>
                     </div>
                 </form>
             </div>
