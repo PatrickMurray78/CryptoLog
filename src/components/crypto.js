@@ -32,7 +32,7 @@ export class Crypto extends React.Component {
                         <img src={this.props.crypto.logo} style={{height: "30px",  width: "30px", marginRight: "10px"}}></img>
                     </td>
                     <td width="18%" style={{textAlign: "left"}}>
-                        <h5>{this.props.crypto.ticker}</h5>
+                        <h5>{this.props.crypto.name}<span style={{paddingLeft: "10px", opacity: "0.5"}}>{this.props.crypto.ticker}</span></h5>
                     </td>
                     <td width="18%">
                         <h5>${this.props.crypto.price}</h5>
