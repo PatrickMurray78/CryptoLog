@@ -21,6 +21,7 @@ export class Read extends React.Component {
         axios.get('http://localhost:4000/api/cryptos')
         .then((response) => {
             this.setState({ cryptos: response.data })
+            console.log(response.data)
             this.getPortfolioValue(response);
         })
         .catch((error) => {

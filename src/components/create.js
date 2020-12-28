@@ -9,7 +9,6 @@ export class Create extends React.Component {
 
         this.onSubmit = this.onSubmit.bind(this);
         this.onChangeTicker = this.onChangeTicker.bind(this);
-        this.onChangePrice = this.onChangePrice.bind(this);
         this.onChangeHoldings = this.onChangeHoldings.bind(this);
 
         this.state = {
@@ -22,12 +21,6 @@ export class Create extends React.Component {
     onChangeTicker(e) {
         this.setState({
             Ticker: e.target.value
-        });
-    }
-
-    onChangePrice(e) {
-        this.setState({
-            Price: e.target.value
         });
     }
 
@@ -67,13 +60,6 @@ export class Create extends React.Component {
                         className='form-control'
                         value={this.state.Ticker}
                         onChange={this.onChangeTicker}></input>
-                    </div>
-                    <div className="form-group" style={{width: "50vw", margin: "auto", paddingTop: "20px"}}>
-                        <label>Add Price: </label>
-                        <input type='text'
-                        className='form-control'
-                        value={this.state.Price}
-                        onChange={this.onChangePrice}></input>
                     </div>
                     <div className="form-group" style={{width: "50vw", margin: "auto", paddingTop: "20px"}}>
                         <label>Add Holdings: </label>
