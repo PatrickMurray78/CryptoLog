@@ -88,7 +88,7 @@ app.get('/api/cryptos/:id', (req, res) => {
 })
 
 app.put('/api/cryptos/:id', 
-check('holdings').isInt({ min: 0}).withMessage("Holdings have to be greater than 0"),
+check('holdings').isFloat({ min: 0}).withMessage("Holdings have to be greater than 0"),
 (req, res) => {
     console.log("Update crypto: " + req.params.id)
     console.log(req.body)
@@ -97,12 +97,14 @@ check('holdings').isInt({ min: 0}).withMessage("Holdings have to be greater than
         res.sendStatus(404)
     }
     else {
+        req.body.holdings = parseFloat(req.body.holdings).toFixed(2)
         CryptoModel.findByIdAndUpdate(req.params.id, req.body, {new: true},
             (err) => {
                 if(err) {
                     console.log(err)
                 }
             })
+            console.log(req.body)
         res.sendStatus(200)
     }   
 })
@@ -116,7 +118,7 @@ app.delete('/api/cryptos/:id', (req, res) => {
 })
 
 app.post('/api/cryptos', 
-check('holdings').isInt({ min: 0}).withMessage("Holdings have to be greater than 0"),
+check('holdings').isFloat({ min: 0}).withMessage("Holdings have to be greater than 0"),
 (req, res) => {
     console.log('Crypto Received')
     console.log(req.body.ticker)
@@ -144,12 +146,13 @@ check('holdings').isInt({ min: 0}).withMessage("Holdings have to be greater than
                         .then((res) => {
                             let ticker = "res.data." + req.body.ticker + ".quote.USD.price"
                             let tickerPrice = parseFloat(eval(ticker)).toFixed(3)
-                            
+                            let holdings = parseFloat(req.body.holdings).toFixed(2)
+
                             CryptoModel.create({
                                 ticker: req.body.ticker,
                                 name: result.name,
                                 price: tickerPrice,
-                                holdings: req.body.holdings,
+                                holdings: holdings,
                                 logo: result.logo,
                             })
                         })
