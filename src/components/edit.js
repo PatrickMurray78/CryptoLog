@@ -56,20 +56,18 @@ export class Edit extends React.Component {
 
     onSubmit(e) {
         e.preventDefault();
-        //alert(this.state.Holdings + ' ' + this.state.Ticker + ' added at ' + this.state.Price);
 
         const newCrypto = {
             ticker: this.state.Ticker,
             price: this.state.Price,
             holdings: this.state.Holdings,
-            logo: this.state.Logo,
             _id: this.state._id
         }
 
         axios.put('http://localhost:4000/api/cryptos/' + this.state._id, newCrypto)
         .then(res => {
             if (res.status == 200) {
-                window.location = "/read" 
+                window.location = "/" 
             }
         })
         .catch(err => {

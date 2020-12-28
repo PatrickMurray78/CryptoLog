@@ -13,7 +13,6 @@ export class Create extends React.Component {
         this.onChangeHoldings = this.onChangeHoldings.bind(this);
 
         this.state = {
-            Logo: '',
             Ticker: '',
             Price: '',
             Holdings: ''
@@ -40,19 +39,17 @@ export class Create extends React.Component {
 
     onSubmit(e) {
         e.preventDefault();
-        //alert(this.state.Holdings + ' ' + this.state.Ticker + ' added at ' + this.state.Price);
 
         const newCrypto = {
             ticker: this.state.Ticker,
             price: this.state.Price,
-            holdings: this.state.Holdings,
-            logo: this.state.Logo
+            holdings: this.state.Holdings
         }
 
         axios.post('http://localhost:4000/api/cryptos', newCrypto)
         .then((response) => {
             if (response.status == 200) {
-                window.location = "/read" 
+                window.location = "/" 
             }
         })
         .catch((err) => {

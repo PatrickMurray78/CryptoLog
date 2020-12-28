@@ -5,6 +5,11 @@ const cors = require('cors')
 const bodyParser = require("body-parser")
 const mongoose = require('mongoose')
 const path = require('path')
+const { request } = require('dom-helpers/cjs/animationFrame')
+const CoinMarketCap = require('coinmarketcap-api')
+
+const apiKey = 'f0dee9b3-a51d-44a4-90d6-630c961c7169'
+const client = new CoinMarketCap(apiKey)
 
 app.use(cors())
 app.use(function(req, res, next) {
@@ -14,6 +19,7 @@ app.use(function(req, res, next) {
     "Origin, X-Requested-With, Content-Type, Accept")
     next()
 })
+
 
 //app.use(express.static(path.join(__dirname, '../build')))
 //app.use('/static', express.static(path.join(__dirname, 'build//static')))
@@ -34,6 +40,7 @@ const Schema = mongoose.Schema
 
 var cryptoSchema = new Schema({
     ticker: String,
+    name: String,
     price: String,
     holdings: String,
     logo: String
@@ -41,6 +48,7 @@ var cryptoSchema = new Schema({
 
 var logoSchema = new Schema ({
     ticker:String,
+    name:String,
     logo:String
 })
 
@@ -87,9 +95,8 @@ app.delete('/api/cryptos/:id', (req, res) => {
 app.post('/api/cryptos', (req, res) => {
     console.log('Crypto Received')
     console.log(req.body.ticker)
-    console.log(req.body.price)
     console.log(req.body.holdings)
-
+    
     LogoModel.findOne({'ticker': req.body.ticker}, (err, result) => {
         if(err) {
             console.log(err)
@@ -99,14 +106,22 @@ app.post('/api/cryptos', (req, res) => {
             console.log(req.body.ticker + ' not supported!')
         }
         else {
-            CryptoModel.create({
-                ticker:req.body.ticker,
-                price:req.body.price,
-                holdings:req.body.holdings,
-                logo:result.logo
+            client.getQuotes({symbol: req.body.ticker, option: 'USD'})
+            .then((res) => {
+                let ticker = "res.data." + req.body.ticker + ".quote.USD.price"
+                let tickerPrice = parseFloat(eval(ticker)).toFixed(3)
+                
+                CryptoModel.create({
+                    ticker: req.body.ticker,
+                    name: result.name,
+                    price: tickerPrice,
+                    holdings: req.body.holdings,
+                    logo: result.logo,
+                })
             })
-            res.sendStatus(200)
+            .catch(console.error)
         }
+        res.sendStatus(200)
     })
 })
 
