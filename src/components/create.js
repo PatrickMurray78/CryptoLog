@@ -46,15 +46,21 @@ export class Create extends React.Component {
             }
         })
         .catch((err) => {
-            document.getElementById('invalidInput').innerHTML = "Holdings must be greater than 0!"
-            console.log(err)
+            if(err.response.status == 404) {
+                document.getElementById('invalidHoldings').innerHTML = "Holdings must be greater than 0!"
+            }
+            else if(err.response.status == 402) {
+                document.getElementById('invalidTicker').innerHTML = "Crypto not currently supported!"
+            }
         })
     }
 
     render() {
         return(
             <div className='App' style={{backgroundColor: "#303030", color: "white", height: "100vh", fontFamily: "monospace"}}>
-                <label id='invalidInput'></label>
+                <label id='invalidTicker'></label>
+                <br></br>
+                <label id='invalidHoldings'></label>
                 <form onSubmit={this.onSubmit}>
                     <div className="form-group" style={{width: "50vw", margin: "auto", paddingTop: "20px"}}>
                         <label>Add Ticker: </label>

@@ -127,8 +127,7 @@ check('holdings').isInt({ min: 0}).withMessage("Holdings have to be greater than
             console.log(err)
         }
         else if(result == null) {
-            console.log('')
-            console.log(req.body.ticker + ' not supported!')
+            res.sendStatus(402)
         }
         else {
             var errors = validationResult(req)
