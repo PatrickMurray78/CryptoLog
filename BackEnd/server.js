@@ -57,7 +57,21 @@ var LogoModel = conn2.model('logos', logoSchema)
 
 app.get('/api/cryptos', (req, res) => {
     CryptoModel.find((err, data) =>{
-        res.json(data);
+        data.forEach(crypto => {
+            client.getQuotes({symbol: crypto.ticker, option: 'USD'})
+            .then((res) => {
+                let ticker = "res.data." + crypto.ticker + ".quote.USD.price"
+                let tickerPrice = parseFloat(eval(ticker)).toFixed(3)
+                CryptoModel.findByIdAndUpdate(crypto.id, { price: tickerPrice }, 
+                    (err, data) => {
+                        if(err) {
+                            console.log(err)
+                        }
+                    })
+            })
+            .catch() 
+        });
+        res.json(data)
     })
 })
 

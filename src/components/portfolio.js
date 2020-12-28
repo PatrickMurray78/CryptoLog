@@ -16,13 +16,16 @@ export class Read extends React.Component {
         cryptos: []
     };
 
-
     componentDidMount() {
         axios.get('http://localhost:4000/api/cryptos')
         .then((response) => {
             this.setState({ cryptos: response.data })
-            console.log(response.data)
             this.getPortfolioValue(response);
+
+            /*setInterval(function() {
+                this.setState({ cryptos: response.data })
+                this.getPortfolioValue(response);
+            }, 10000);*/
         })
         .catch((error) => {
             console.log(error)
@@ -45,6 +48,10 @@ export class Read extends React.Component {
             this.state.portfolioValue += crypto.price * crypto.holdings;
         });
         document.getElementById('portfolioValueID').innerHTML = '$' + Math.round(this.state.portfolioValue * 100) / 100;
+    }
+
+    myFunction() {
+        alert('Hello');
     }
 
     render() {
