@@ -122,37 +122,57 @@ check('holdings').isInt({ min: 0}).withMessage("Holdings have to be greater than
     console.log(req.body.ticker)
     console.log(req.body.holdings)
     
-    LogoModel.findOne({'ticker': req.body.ticker}, (err, result) => {
+    CryptoModel.findOne({'ticker': req.body.ticker}, (err, result) => {
         if(err) {
             console.log(err)
         }
         else if(result == null) {
-            res.sendStatus(402)
+            LogoModel.findOne({'ticker': req.body.ticker}, (err, result) => {
+                if(err) {
+                    console.log(err)
+                }
+                else if(result == null) {
+                    res.sendStatus(402)
+                }
+                else {
+                    var errors = validationResult(req)
+                    if(!errors.isEmpty()) {
+                        res.sendStatus(404)
+                    }
+                    else {
+                        client.getQuotes({symbol: req.body.ticker, option: 'USD'})
+                        .then((res) => {
+                            let ticker = "res.data." + req.body.ticker + ".quote.USD.price"
+                            let tickerPrice = parseFloat(eval(ticker)).toFixed(3)
+                            
+                            CryptoModel.create({
+                                ticker: req.body.ticker,
+                                name: result.name,
+                                price: tickerPrice,
+                                holdings: req.body.holdings,
+                                logo: result.logo,
+                            })
+                        })
+                        .catch(console.error)
+                        res.sendStatus(200)
+                    }
+                }
+            })
         }
         else {
-            var errors = validationResult(req)
-            if(!errors.isEmpty()) {
-                res.sendStatus(404)
-            }
-            else {
-                client.getQuotes({symbol: req.body.ticker, option: 'USD'})
-                .then((res) => {
-                    let ticker = "res.data." + req.body.ticker + ".quote.USD.price"
-                    let tickerPrice = parseFloat(eval(ticker)).toFixed(3)
-                    
-                    CryptoModel.create({
-                        ticker: req.body.ticker,
-                        name: result.name,
-                        price: tickerPrice,
-                        holdings: req.body.holdings,
-                        logo: result.logo,
-                    })
-                })
-                .catch(console.error)
-                res.sendStatus(200)
-            }
+            let updatedHoldings = parseFloat(result.holdings) + parseFloat(req.body.holdings)
+            CryptoModel.findOneAndUpdate({ticker: req.body.ticker}, {$set: {holdings: updatedHoldings}}, (err, result) => {
+                if(err) {
+                    console.log(err)
+                }
+                else {
+                    console.log(result)
+                    res.sendStatus(200)
+                }
+            })
         }
     })
+    
 })
 
 /*app.get('*', (req, res) => {
