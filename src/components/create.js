@@ -46,6 +46,7 @@ export class Create extends React.Component {
             }
         })
         .catch((err) => {
+            document.getElementById('invalidInput').innerHTML = "Holdings must be greater than 0!"
             console.log(err)
         })
     }
@@ -53,6 +54,7 @@ export class Create extends React.Component {
     render() {
         return(
             <div className='App' style={{backgroundColor: "#303030", color: "white", height: "100vh", fontFamily: "monospace"}}>
+                <label id='invalidInput'></label>
                 <form onSubmit={this.onSubmit}>
                     <div className="form-group" style={{width: "50vw", margin: "auto", paddingTop: "20px"}}>
                         <label>Add Ticker: </label>
@@ -64,6 +66,7 @@ export class Create extends React.Component {
                     <div className="form-group" style={{width: "50vw", margin: "auto", paddingTop: "20px"}}>
                         <label>Add Holdings: </label>
                         <input type='text'
+                        name='holdings'
                         className='form-control'
                         value={this.state.Holdings}
                         onChange={this.onChangeHoldings}></input>

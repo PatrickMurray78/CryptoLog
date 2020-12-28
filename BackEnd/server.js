@@ -3,6 +3,7 @@ const app = express()
 const port = 4000
 const cors = require('cors')
 const bodyParser = require("body-parser")
+const { body , validationResult, check } = require('express-validator');
 const mongoose = require('mongoose')
 const path = require('path')
 const { request } = require('dom-helpers/cjs/animationFrame')
@@ -19,6 +20,9 @@ app.use(function(req, res, next) {
     "Origin, X-Requested-With, Content-Type, Accept")
     next()
 })
+
+//app.set('views', path.join(__dirname, 'components'))
+//app.set('view engine', 'js')
 
 
 //app.use(express.static(path.join(__dirname, '../build')))
@@ -83,19 +87,24 @@ app.get('/api/cryptos/:id', (req, res) => {
     })
 })
 
-app.put('/api/cryptos/:id', (req, res) => {
+app.put('/api/cryptos/:id', 
+check('holdings').isInt({ min: 0}).withMessage("Holdings have to be greater than 0"),
+(req, res) => {
     console.log("Update crypto: " + req.params.id)
     console.log(req.body)
-
-    CryptoModel.findByIdAndUpdate(req.params.id, req.body, {new: true},
-        (err, data) => {
-            if(err) {
-                console.log(err)
-            }
-            else {
-                res.sendStatus(200)
-            }
-        })
+    var errors = validationResult(req)
+    if(!errors.isEmpty()) {
+        res.sendStatus(404)
+    }
+    else {
+        CryptoModel.findByIdAndUpdate(req.params.id, req.body, {new: true},
+            (err) => {
+                if(err) {
+                    console.log(err)
+                }
+            })
+        res.sendStatus(200)
+    }   
 })
 
 app.delete('/api/cryptos/:id', (req, res) => {
@@ -106,7 +115,9 @@ app.delete('/api/cryptos/:id', (req, res) => {
     })
 })
 
-app.post('/api/cryptos', (req, res) => {
+app.post('/api/cryptos', 
+check('holdings').isInt({ min: 0}).withMessage("Holdings have to be greater than 0"),
+(req, res) => {
     console.log('Crypto Received')
     console.log(req.body.ticker)
     console.log(req.body.holdings)
@@ -120,22 +131,28 @@ app.post('/api/cryptos', (req, res) => {
             console.log(req.body.ticker + ' not supported!')
         }
         else {
-            client.getQuotes({symbol: req.body.ticker, option: 'USD'})
-            .then((res) => {
-                let ticker = "res.data." + req.body.ticker + ".quote.USD.price"
-                let tickerPrice = parseFloat(eval(ticker)).toFixed(3)
-                
-                CryptoModel.create({
-                    ticker: req.body.ticker,
-                    name: result.name,
-                    price: tickerPrice,
-                    holdings: req.body.holdings,
-                    logo: result.logo,
+            var errors = validationResult(req)
+            if(!errors.isEmpty()) {
+                res.sendStatus(404)
+            }
+            else {
+                client.getQuotes({symbol: req.body.ticker, option: 'USD'})
+                .then((res) => {
+                    let ticker = "res.data." + req.body.ticker + ".quote.USD.price"
+                    let tickerPrice = parseFloat(eval(ticker)).toFixed(3)
+                    
+                    CryptoModel.create({
+                        ticker: req.body.ticker,
+                        name: result.name,
+                        price: tickerPrice,
+                        holdings: req.body.holdings,
+                        logo: result.logo,
+                    })
                 })
-            })
-            .catch(console.error)
+                .catch(console.error)
+                res.sendStatus(200)
+            }
         }
-        res.sendStatus(200)
     })
 })
 
