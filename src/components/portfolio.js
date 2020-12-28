@@ -59,7 +59,7 @@ export class Read extends React.Component {
             <div style={{backgroundColor: "#303030", minHeight: "100vh", position: "relative"}}>
                 <div style={{backgroundColor: "grey", width: "90%", height: "70px", margin: "auto", borderRadius: "15px"}}>
                     <h6 style={{color: "white", fontFamily: "monospace", fontSize: "80%", marginBottom: "5px", paddingTop: "7px"}}>Portfolio Value</h6>
-                    <h4 id="portfolioValueID" style={{color: "white", fontFamily: "sans-serif"}}></h4>
+                    <h3 id="portfolioValueID" style={{color: "white", fontFamily: "sans-serif"}}></h3>
                 </div>
                 <table width="90%" style={{textAlign: "right", color: "rgba(255, 255, 255, 0.5)", marginLeft: "5vw", marginTop: "2vh", marginBottom: "-2vh", fontFamily: "monospace"}}>
                     <tr>
