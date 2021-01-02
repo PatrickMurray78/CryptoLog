@@ -164,6 +164,7 @@ check('holdings').isFloat({ min: 0}).withMessage("Holdings have to be greater th
         }
         else {
             let updatedHoldings = parseFloat(result.holdings) + parseFloat(req.body.holdings)
+            updatedHoldings = parseFloat(updatedHoldings).toFixed(2)
             CryptoModel.findOneAndUpdate({ticker: req.body.ticker}, {$set: {holdings: updatedHoldings}}, (err, result) => {
                 if(err) {
                     console.log(err)
