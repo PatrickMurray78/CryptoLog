@@ -22,7 +22,7 @@ export class Read extends React.Component {
             this.setState({ cryptos: response.data })
             this.getPortfolioValue(response);
 
-            //setInterval(this.ReloadData, 10000);
+            setInterval(this.ReloadData, 10000);
         })
         .catch((error) => {
             console.log(error)

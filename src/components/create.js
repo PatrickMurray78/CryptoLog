@@ -2,11 +2,13 @@ import React from 'react';
 import axios from 'axios';
 import Link from 'react-router-dom/Link';
 
+// The Create class will be used to add new cryptos to portfolio
 export class Create extends React.Component {
 
     constructor() {
         super();
 
+        // Bind new data to corresponding variables
         this.onSubmit = this.onSubmit.bind(this);
         this.onChangeTicker = this.onChangeTicker.bind(this);
         this.onChangeHoldings = this.onChangeHoldings.bind(this);
@@ -18,18 +20,21 @@ export class Create extends React.Component {
         }
     }
 
+     // When ticker is changed, set the states ticker to the new one
     onChangeTicker(e) {
         this.setState({
             Ticker: e.target.value
         });
     }
 
+     // When holdings is changed, set the states holdings to the new one
     onChangeHoldings(e) {
         this.setState({
             Holdings: e.target.value
         });
     }
 
+    // When form is submitted, make a post request to the server and pass newCrypto
     onSubmit(e) {
         e.preventDefault();
 
@@ -41,20 +46,23 @@ export class Create extends React.Component {
 
         axios.post('http://localhost:4000/api/cryptos', newCrypto)
         .then((response) => {
-            if (response.status == 200) {
+            if (response.status == 200) { // Success
                 window.location = "/" 
             }
         })
         .catch((err) => {
-            if(err.response.status == 404) {
+            if(err.response.status == 404) { // Holdings was an invalid vaue
                 document.getElementById('invalidHoldings').innerHTML = "Holdings must be greater than 0!"
             }
-            else if(err.response.status == 402) {
+            else if(err.response.status == 402) { // Ticker is not currently supported
                 document.getElementById('invalidTicker').innerHTML = "Crypto not currently supported!"
             }
         })
     }
 
+    // Inside this render() function we create a form. This form has
+    // two input boxes for the ticker and holdings. There is also
+    // a submit button at the bottom. Once clicked the data is sent to server
     render() {
         return(
             <div className='App' style={{backgroundColor: "#303030", color: "white", height: "100vh", fontFamily: "monospace"}}>
