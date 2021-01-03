@@ -3,6 +3,7 @@ import { Cryptos } from './cryptos';
 import axios from 'axios';
 import Link from 'react-router-dom/Link';
 
+// The Read class reads in the stored cryptos and sends them to the cryptos component
 export class Read extends React.Component {
 
     constructor() {
@@ -11,24 +12,32 @@ export class Read extends React.Component {
         this.ReloadData = this.ReloadData.bind(this);
     }
 
+    // state contains an empty array 'cryptos' which will contain all the stored cryptos to be displayed.
+    // The total portfolioValue is also stored here which I have initialised to 0.
     state = {
         portfolioValue: 0,
         cryptos: []
     };
 
+    // This function uses axios which is a promise based HTTP client
+    // We then use it to create a lifecycle hook that returns the JSON data
     componentDidMount() {
         axios.get('http://localhost:4000/api/cryptos')
         .then((response) => {
             this.setState({ cryptos: response.data })
             this.getPortfolioValue(response);
 
-            setInterval(this.ReloadData, 10000);
+            //setInterval(this.ReloadData, 30000);
         })
         .catch((error) => {
             console.log(error)
         });
     }
 
+    // This function uses axios to create a lifecycle hook that returns the JSON data.
+    // Similar to componentDidMount which only gets ran once. This function gets ran whenever
+    // a movie is deleted/edited to update the portfolio. It is also called every 30 seconds
+    // to ensure the prices are constantly updating.
     ReloadData() {
         axios.get('http://localhost:4000/api/cryptos')
         .then((response) => {
@@ -40,20 +49,23 @@ export class Read extends React.Component {
         });
     }
 
+    // This function gets the total portfolio value of our portfolio, by iterating
+    // through the cryptos array and adding the total value of each crypto to the
+    // portfolioValue variable. Updated every 30 seconds
     getPortfolioValue(cryptos) {
         // Set total portfolio value
         this.state.portfolioValue = 0;
         cryptos.data.forEach(crypto => {
             this.state.portfolioValue += crypto.price * crypto.holdings;
         });
-        console.log(this.state.portfolioValue);
+
+        // Set the portfolioValueID label to the current portfolio value
         document.getElementById('portfolioValueID').innerHTML = '$' + parseFloat(this.state.portfolioValue).toFixed(2);//Math.round(this.state.portfolioValue);
     }
 
-    myFunction() {
-        alert('Hello');
-    }
-
+    // This function creates our user interface for the portfolio component. 
+    // Each crypto is then read in from the cryptos component and displayed
+    // in the table.
     render() {
         return(
             <div style={{backgroundColor: "#303030", minHeight: "100vh", position: "relative"}}>

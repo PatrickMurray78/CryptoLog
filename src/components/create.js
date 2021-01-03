@@ -62,7 +62,7 @@ export class Create extends React.Component {
 
     // Inside this render() function we create a form. This form has
     // two input boxes for the ticker and holdings. There is also
-    // a submit button at the bottom. Once clicked the data is sent to server
+    // a check icon at the bottom. Once clicked the data is sent to server
     render() {
         return(
             <div className='App' style={{backgroundColor: "#303030", color: "white", height: "100vh", fontFamily: "monospace"}}>

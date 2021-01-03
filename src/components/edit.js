@@ -2,13 +2,14 @@ import React from 'react';
 import axios from 'axios';
 import Link from 'react-router-dom/Link';
 
+// The Edit class will be used to edit existing crypto details
 export class Edit extends React.Component {
 
     constructor() {
         super();
 
+        // Bind new data to corresponding variables
         this.onSubmit = this.onSubmit.bind(this);
-        this.onChangeTicker = this.onChangeTicker.bind(this);
         this.onChangeHoldings = this.onChangeHoldings.bind(this);
 
         this.state = {
@@ -35,18 +36,14 @@ export class Edit extends React.Component {
         });
     }
 
-    onChangeTicker(e) {
-        this.setState({
-            Ticker: e.target.value
-        });
-    }
-
+    // When holdings is changed, set the states holdings to the new one
     onChangeHoldings(e) {
         this.setState({
             Holdings: e.target.value
         });
     }
 
+    // When form is submitted, make a put request to the server and pass newCrypto
     onSubmit(e) {
         e.preventDefault();
 
@@ -59,16 +56,20 @@ export class Edit extends React.Component {
 
         axios.put('http://localhost:4000/api/cryptos/' + this.state._id, newCrypto)
         .then(res => {
-            if (res.status == 200) {
+            if (res.status == 200) { // Success
                 window.location = "/" 
             }
         })
-        .catch(err => {
+        .catch((err) => { // Invalid holdings entered
             document.getElementById('invalidInput').innerHTML = "Holdings must be greater than 0!"
             console.log(err)
         });
     }
 
+    // Inside this render() function we create a form. This form has
+    // two input boxes for the ticker and holdings. There is also
+    // a check icon at the bottom. Once clicked the information is sent
+    // to the server.
     render() {
         return(
             <div className='App' style={{backgroundColor: "#303030", color: "white", height: "100vh", fontFamily: "monospace"}}>
@@ -79,7 +80,6 @@ export class Edit extends React.Component {
                         <input type='text'
                         className='form-control'
                         value={this.state.Ticker}
-                        onChange={this.onChangeTicker}
                         readOnly></input>
                     </div>
                     <div className="form-group" style={{width: "50vw", margin: "auto", paddingTop: "20px"}}>

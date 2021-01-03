@@ -1,9 +1,8 @@
 import React from 'react';
-import Card from 'react-bootstrap/Card';
-import Button from 'react-bootstrap/Button';
 import axios from 'axios';
 import Link from 'react-router-dom/Link';
 
+// This class creates a custom table to display each crypto
 export class Crypto extends React.Component {
 
     constructor() {
@@ -11,7 +10,7 @@ export class Crypto extends React.Component {
 
         this.DeleteCrypto = this.DeleteCrypto.bind(this);
     }
-
+    // This function deletes a crypto from the database, it is called upon by the trashcan icon
     DeleteCrypto(e) {
         e.preventDefault();
         console.log("Delete: " + this.props.crypto._id);
@@ -19,11 +18,13 @@ export class Crypto extends React.Component {
         axios.delete("http://localhost:4000/api/cryptos/" + this.props.crypto._id)
         .then(() => {
             console.log("Successfully deleted")
-            this.props.ReloadData();
+            this.props.ReloadData(); // Reload data
         })
         .catch();
     }
 
+    // Inside this render() function we create our custom table to display all
+    // the crypto details in a nice organised table.
     render() {
         return (
             <table style={{width: "90%", marginLeft: "5vw", textAlign: "right", borderTop: "1px solid rgba(255, 255, 255, 0.3", color: "white", fontFamily: "sans-serif"}}>
